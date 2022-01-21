@@ -4,7 +4,7 @@ Object = "{AB4C3C68-3091-48D0-BB3D-8F92CD2CB684}#1.0#0"; "AButtons.ocx"
 Begin VB.Form FormMessage 
    BackColor       =   &H00E9FEFE&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   2730
+   ClientHeight    =   2970
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   5595
@@ -21,10 +21,9 @@ Begin VB.Form FormMessage
    EndProperty
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2730
+   ScaleHeight     =   2970
    ScaleWidth      =   5595
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
@@ -33,7 +32,7 @@ Begin VB.Form FormMessage
       Index           =   0
       Left            =   4230
       TabIndex        =   2
-      Top             =   1905
+      Top             =   2130
       Width           =   1290
       _ExtentX        =   2275
       _ExtentY        =   741
@@ -60,7 +59,7 @@ Begin VB.Form FormMessage
       Height          =   210
       Left            =   60
       TabIndex        =   4
-      Top             =   2160
+      Top             =   2385
       Visible         =   0   'False
       Width           =   3225
    End
@@ -78,7 +77,7 @@ Begin VB.Form FormMessage
       Height          =   300
       Left            =   0
       TabIndex        =   5
-      Top             =   2415
+      Top             =   2640
       Width           =   5595
       Begin VB.Label lblRotulo 
          Appearance      =   0  'Flat
@@ -105,11 +104,20 @@ Begin VB.Form FormMessage
       End
    End
    Begin VB.ComboBox cboOpcoes 
-      Height          =   315
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   360
       Left            =   690
       Style           =   2  'Dropdown List
       TabIndex        =   0
-      Top             =   1500
+      Top             =   1695
       Visible         =   0   'False
       Width           =   1950
    End
@@ -196,15 +204,25 @@ Begin VB.Form FormMessage
       EndProperty
    End
    Begin VB.TextBox txtTexto 
-      Height          =   330
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   360
       Index           =   0
       Left            =   690
       TabIndex        =   1
-      Top             =   1500
+      Top             =   1695
       Width           =   4860
    End
    Begin VB.TextBox txtTexto 
       BackColor       =   &H00FFFFFF&
+      BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Century Gothic"
          Size            =   9
@@ -215,14 +233,24 @@ Begin VB.Form FormMessage
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00212121&
-      Height          =   1140
+      Height          =   1200
       Index           =   1
-      Left            =   690
+      Left            =   790
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   2  'Vertical
       TabIndex        =   3
       Text            =   "FormMessage.frx":BCBA
+      Top             =   390
+      Width           =   4710
+   End
+   Begin VB.PictureBox picMensagem 
+      BackColor       =   &H00FFFFFF&
+      Height          =   1320
+      Left            =   690
+      ScaleHeight     =   1260
+      ScaleWidth      =   4800
+      TabIndex        =   8
       Top             =   330
       Width           =   4860
    End
@@ -239,7 +267,7 @@ Begin VB.Form FormMessage
    End
    Begin VB.Label lblCaption 
       BackColor       =   &H0049CAE0&
-      Caption         =   " :: lblCaption"
+      Caption         =   " :: QUALITÁ Revenda Auto - Sistema de Compra e Venda de Automovéis"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   8.25
@@ -371,10 +399,10 @@ Public Function ShowInput(ByVal psPrompt As String, _
 
   Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
 
-  txtTexto(0).Text = psValorDefault
+  CampoInput.Text = psValorDefault
 
   If pbInputPassword Then
-    With txtTexto(0)
+    With CampoInput
       .PasswordChar = "X"
       .Font.Name = "Wingdings"
       .Font.Size = 10
@@ -385,7 +413,7 @@ Public Function ShowInput(ByVal psPrompt As String, _
 
   mbShowInput = True
   Me.Show vbModal
-  ShowInput = txtTexto(0).Text
+  ShowInput = CampoInput.Text
   Unload Me
 End Function
 
@@ -406,7 +434,7 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
 
   Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
 
-  txtTexto(0).Visible = False
+  CampoInput.Visible = False
 
   On Error GoTo TrataErro
   aLista = Split(psListaArray, ",")
@@ -417,7 +445,7 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
 
   On Local Error Resume Next
   cboOpcoes.Visible = True
-  cboOpcoes.Move txtTexto(0).Left, txtTexto(0).Top, txtTexto(0).Width
+  cboOpcoes.Move CampoInput.Left, CampoInput.Top, CampoInput.Width
   cboOpcoes.ListIndex = pnListIndex
   On Error GoTo 0
 
@@ -425,7 +453,7 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
 
   mbShowInput = True
   Me.Show vbModal
-  ShowInputCombo = txtTexto(0).Text
+  ShowInputCombo = CampoInput.Text
   Unload Me
   Exit Function
 TrataErro:
@@ -447,19 +475,15 @@ Public Function ShowMsgBox(ByVal psPrompt As String, _
 
   Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
 
-  If pImagem = imEspacoTotal Then
-    txtTexto(1).Left = 100
-    txtTexto(1).Width = Me.ScaleWidth - 200
-  End If
-
-  txtTexto(1).Height = (txtTexto(0).Top + txtTexto(0).Height) - txtTexto(1).Top
-  txtTexto(0).Visible = False
+  Call ResizeCaixaMensagem(pImagem = imEspacoTotal)
+  
+  CampoInput.Visible = False
 
   Call CriarBotoes(psCapButtonsArray)
 
   mbShowInput = False
   Me.Show vbModal
-  ShowMsgBox = txtTexto(0).Text
+  ShowMsgBox = CampoInput.Text
   Unload Me
 End Function
 
@@ -475,22 +499,26 @@ Public Property Get TextoMensagem() As TextBox
   Set TextoMensagem = txtTexto(1)
 End Property
 
+Private Property Get CampoInput() As TextBox
+  Set CampoInput = txtTexto(0)
+End Property
+
 Public Property Let AtualizarMensagem(ByVal pMsg As String)
-  txtTexto(1).Text = pMsg
+  TextoMensagem.Text = pMsg
 End Property
 
 Private Sub cboOpcoes_Click()
-  txtTexto(0).Text = cboOpcoes.Text
+  CampoInput.Text = cboOpcoes.Text
 End Sub
 
 Private Sub cmdButtons_Click(Index As Integer)
   If mbShowInput Then
     meResultInput = IIf(Index = 0, inputOK, inputCancel)
     If meResultInput = inputCancel Then
-      txtTexto(0).Text = ""
+      CampoInput.Text = ""
     End If
   Else
-    txtTexto(0).Text = cmdButtons(Index).Caption
+    CampoInput.Text = cmdButtons(Index).Caption
   End If
 
   Me.Hide
@@ -537,7 +565,7 @@ Private Sub DragForm()
 End Sub
 
 Private Sub Form_Click()
-'  MsgBox TextWidth(txtTexto(1).Text)
+'  MsgBox TextWidth(TextoMensagem.Text)
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -561,9 +589,9 @@ Private Sub Form_Load()
   sCap = App.CompanyName
   lblRotulo.Caption = App.LegalCopyright
 
-  txtTexto(1).Text = ""
+  TextoMensagem.Text = ""
   imgIcone.BorderStyle = 0
-  txtTexto(0).Visible = True
+  CampoInput.Visible = True
   cboOpcoes.Visible = False
 
   'lblRotulo.BackColor = RGB(210, 198, 108)
@@ -587,7 +615,7 @@ Private Sub SetarValores(ByVal pPrompt As String, ByVal pTitulo As String, _
   Me.Top = IIf(YTop = -1, (Screen.Height - Me.Height) / 2, YTop)
   Me.Left = IIf(XLeft = -1, (Screen.Width - Me.Width) / 2, XLeft)
 
-  txtTexto(1).Text = pPrompt
+  TextoMensagem.Text = pPrompt
 
   On Local Error Resume Next
   If pImagem = imSemImagem Or pImagem = imEspacoTotal Then
@@ -612,13 +640,9 @@ Public Sub ShowInfo(ByVal psPrompt As String, _
 
   Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
 
-  If pImagem = imEspacoTotal Then
-    txtTexto(1).Left = 100
-    txtTexto(1).Width = Me.ScaleWidth - 200
-  End If
-
-  txtTexto(1).Height = (txtTexto(0).Top + txtTexto(0).Height) - txtTexto(1).Top
-  txtTexto(0).Visible = False
+  Call ResizeCaixaMensagem(pImagem = imEspacoTotal)
+  
+  CampoInput.Visible = False
 
   Call CriarBotoes("&OK")
 
@@ -628,3 +652,14 @@ Public Sub ShowInfo(ByVal psPrompt As String, _
   SetWindowPos Me.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
 End Sub
 
+Private Sub ResizeCaixaMensagem(ByVal pAmpliar As Boolean)
+  If pAmpliar Then
+    picMensagem.Left = 100
+    picMensagem.Width = Me.ScaleWidth - 200
+  End If
+  picMensagem.Height = (CampoInput.Top + CampoInput.Height) - picMensagem.Top
+  
+  TextoMensagem.Left = picMensagem.Left + 100
+  TextoMensagem.Width = picMensagem.Width - 150
+  TextoMensagem.Height = picMensagem.Height - 120
+End Sub
