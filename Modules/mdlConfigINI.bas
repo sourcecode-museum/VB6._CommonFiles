@@ -16,12 +16,13 @@ Type tpINIConexao
 End Type
 Private mtINIConexao As tpINIConexao
 
-Type tEmpresa
-  NomeEmpresa    As String
+Type tSistema
+'  Empresa    As String
+  AutoUpdate     As Boolean
   imgFundo       As String
-  IMGLogoMarca   As String
+  ImgLogoMarca   As String
 End Type
-Private mtEmpresa As tEmpresa
+Private mtSistema As tSistema
 
 Global gsPathINI As String
 
@@ -44,7 +45,8 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
     
     With oArqINI
         .pathFile = sPathFile
-        .Gravar "SISTEMA", "NomeEmpresa", App.Comments
+        .Gravar "SISTEMA", "EMPRESA", App.LegalTrademarks
+        .Gravar "SISTEMA", "AUTO_UPDATE", "S"
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
@@ -170,26 +172,31 @@ Public Function DialogConnINI(ByRef pProvider As String, ByRef pSource As String
     Set oSis = Nothing
 End Function
 
-Public Property Get Empresa() As tEmpresa
-   Empresa = mtEmpresa
+Public Property Get Sistema() As tSistema
+   Sistema = mtSistema
 End Property
-Public Property Let Empresa(vNewValue As tEmpresa)
-   mtEmpresa = vNewValue
+Public Property Let Sistema(vNewValue As tSistema)
+   mtSistema = vNewValue
 End Property
 
-Public Sub LerInfoEmpresa()
-   Dim VarEmpresa As tEmpresa
-   
-   Set goArqINI = New SisFuncoes.cArqINI
-   With goArqINI
-        
-      .pathFile = GetPathINI()
-      VarEmpresa.NomeEmpresa = .Ler("SISTEMA", "NomeEmpresa", "Contato:heliomarpm@hotmail.com ")
-      VarEmpresa.imgFundo = .Ler("SISTEMA", "IMGFundo", "Fundo.JPG")
-      VarEmpresa.IMGLogoMarca = .Ler("SISTEMA", "IMGLogo", "Logo.JPG")
-      Empresa = VarEmpresa
-   End With
-   Set goArqINI = Nothing
+Public Sub LerInfoSistema()
+  Dim varSistema As tSistema
+  Dim value As String
+  
+  Set goArqINI = New SisFuncoes.cArqINI
+  With goArqINI
+    .pathFile = GetPathINI()
+    '      varSistema.Empresa = .Ler("SISTEMA", "EMPRESA", "heliomarpm@hotmail.com")
+    
+    value = .Ler("SISTEMA", "AUTO_UPDATE", "S") = "S"
+    varSistema.AutoUpdate = value = "S" Or value = "True" Or value = "1"
+    varSistema.imgFundo = .Ler("SISTEMA", "IMG_BACKGROUND", "Fundo.jpg")
+    varSistema.ImgLogoMarca = .Ler("SISTEMA", "IMG_LOGO", "Logo.jpg")
+    
+    Sistema = varSistema
+  End With
+  Set goArqINI = Nothing
+  
 End Sub
 
 Public Sub UpdatePathDB(ByVal pNewSource As String)
