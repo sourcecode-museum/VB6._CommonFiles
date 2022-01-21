@@ -519,14 +519,14 @@ End Sub
 
 Public Sub MGShowErro(ByVal pProcedure As String, Optional ByVal Mensagem As String, Optional ByVal Titulo As String)
   If Mensagem = "" Then
-    Mensagem = "Nome Procedure: " & pProcedure & vbCrLf & vbCrLf & _
+    Mensagem = "Procedimento..: " & pProcedure & vbCrLf & _
                "Número do Erro: " & Err.Source & vbCrLf & _
                "Descrição.....: " & Err.Description & vbCrLf & vbCrLf & _
                "Consulte o Administrador de Sistema e o informe sobre o erro!"
   End If
   
   If Titulo = "" Then
-    Titulo = App.FileDescription
+    Titulo = App.ProductName
     If Titulo = "" Then Titulo = App.EXEName
   End If
     
@@ -540,7 +540,7 @@ End Sub
 
 Public Sub MGShowInfo(ByVal Mensagem As String, Optional ByVal Titulo As String)
   If Titulo = "" Then
-    Titulo = App.FileDescription
+    Titulo = App.ProductName
     If Titulo = "" Then Titulo = App.EXEName
   End If
   
@@ -553,7 +553,7 @@ End Sub
 Public Function MGShowQuest(ByVal Mensagem As String, Optional ByVal Titulo As String, _
                             Optional ByVal psBotoes As String = "&OK") As String
   If Titulo = "" Then
-    Titulo = App.FileDescription
+    Titulo = App.ProductName
     If Titulo = "" Then Titulo = App.EXEName
   End If
   

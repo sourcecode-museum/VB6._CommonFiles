@@ -50,7 +50,7 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
-        .Gravar "CONEXAO", "SOURCE", App.path & "\" & App.EXEName & ".mdb"
+        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & App.EXEName & ".mdb"
     End With
     
     Set oArqINI = Nothing
@@ -59,8 +59,8 @@ End Sub
 Private Function GetPathINI() As String
     Dim sPathINI As String
     
-    If Right$(App.path, 1) <> "\" Then
-        sPathINI = App.path & "\"
+    If Right$(App.Path, 1) <> "\" Then
+        sPathINI = App.Path & "\"
     End If
     sPathINI = sPathINI & "CONFIG.INI"
     
@@ -83,17 +83,17 @@ Public Function LerINI2StrConn() As String
         
     With oSis.ArqINI
         .pathFile = GetPathINI
-        sBase = .Ler("CONEXAO", "UserConnect", "")
+        sBase = .Ler("CONEXAO", "UserConnect", "+")
         sDBDados = Split(sBase, "+")
-        sProvider = .Ler("CONEXAO", sDBDados(0), "")
+        sProvider = .Ler("CONEXAO", IIf(sDBDados(0) <> "", sDBDados(0), "PROVEDOR"), "")
     
         On Error GoTo ErrSource:
         'Vai dar erro caso tenha apenas um Dado de conexao
-        sSource = Trim(.Ler("CONEXAO", sDBDados(1), ""))
+        sSource = Trim(.Ler("CONEXAO", IIf(sDBDados(1) <> "", sDBDados(1), "SOURCE"), ""))
     
         If Left$(sSource, 1) = "\" Then
             'Com 2 Barras ta buscando da rede
-            If Left$(sSource, 2) <> "\\" Then sSource = App.path & sSource
+            If Left$(sSource, 2) <> "\\" Then sSource = App.Path & sSource
         End If
     
         'este pega o banco que de acordo com a empresa que seleciona
@@ -130,6 +130,7 @@ SetFuncao:
         .PathDB = sPathDB
         .StrConexao = sProvSource
         .BancoTipoMDB = InStrRev(sSource, ".mdb") Or InStrRev(sSource, ".accdb")
+        
         Let INIConexao = VarConexao
     End With
     
@@ -149,27 +150,24 @@ BrowserPathBD:
     End If
 End Function
 
-Public Function DialogConnINI(ByRef pProvider As String, ByRef pSource As String) As Boolean
-    Dim oSis As SisFuncoes.cSisFuncoes
-    
-    Set oSis = New SisFuncoes.cSisFuncoes
-    
-    oSis.PathDB pProvider, pSource
-    If pProvider <> "" And pSource <> "" Then
-        With oSis.ArqINI
-            .pathFile = GetPathINI
-        
-            .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
-            .Gravar "CONEXAO", "PROVEDOR", pProvider
-            .Gravar "CONEXAO", "SOURCE", pSource
-        End With
-        
-        DialogConnINI = True
-    Else
-        DialogConnINI = False
+Public Function DialogConnINI(ByRef pProvider As String, ByRef pSource As String, Optional ByVal pSaveINI As Boolean = False) As Boolean
+  Dim oSis As SisFuncoes.cSisFuncoes
+  
+  Set oSis = New SisFuncoes.cSisFuncoes
+  
+  oSis.PathDB pProvider, pSource
+  If pProvider <> "" And pSource <> "" Then
+  
+    If pSaveINI Then
+      Call UpdateProvider(pProvider, pSource)
     End If
     
-    Set oSis = Nothing
+    DialogConnINI = True
+  Else
+    DialogConnINI = False
+  End If
+  
+  Set oSis = Nothing
 End Function
 
 Public Property Get Sistema() As tSistema
@@ -199,11 +197,17 @@ Public Sub LerInfoSistema()
   
 End Sub
 
-Public Sub UpdatePathDB(ByVal pNewSource As String)
+Public Sub UpdateProvider(ByVal pProvider As String, ByVal pSource As String)
   Dim ini As New SisFuncoes.cArqINI
   
-  ini.pathFile = GetPathINI
-  ini.Gravar "CONEXAO", "SOURCE", pNewSource
+  With ini
+    .pathFile = GetPathINI
+  
+    .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
+    .Gravar "CONEXAO", "PROVEDOR", pProvider
+    .Gravar "CONEXAO", "SOURCE", pSource
+  End With
+
   Set ini = Nothing
   
   mtINIConexao.PathDB = pNewSource
