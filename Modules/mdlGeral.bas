@@ -411,7 +411,11 @@ Private Function BuscarhWnd(ByVal InstanciaID As Long) As Long
 End Function
 
 Public Function FileExist(pathFile As String) As Boolean
-  FileExist = (Dir(pathFile, vbNormal Or vbReadOnly Or vbHidden Or vbSystem Or vbArchive) <> "")
+    If Trim(pathFile) = "" Then
+        FileExist = False
+    Else
+        FileExist = (Dir(pathFile, vbNormal Or vbReadOnly Or vbHidden Or vbSystem Or vbArchive) <> "")
+    End If
 End Function
 
 Public Function DeleteFile(ByVal pathFile As String) As Boolean
@@ -550,8 +554,9 @@ Public Sub MGShowInfo(ByVal Mensagem As String, Optional ByVal Titulo As String)
   Set oF = Nothing
 End Sub
 
-Public Function MGShowQuest(ByVal Mensagem As String, Optional ByVal Titulo As String, _
-                            Optional ByVal psBotoes As String = "&OK") As String
+Public Function MGShowQuest(ByVal Mensagem As String, _
+                            Optional ByVal Titulo As String, _
+                            Optional ByVal psBotoes As String = "&Sim|&Não") As String
   If Titulo = "" Then
     Titulo = App.ProductName
     If Titulo = "" Then Titulo = App.EXEName
@@ -668,14 +673,23 @@ Sair:
   CalculaIdade = sIdade
 End Function
 
+'Public Function IsDebug() As Boolean
+'On Error GoTo TrataErro
+'    Debug.Print 1 \ 0 'Divisao por zero, ocorre erro apenas em mode debug
+'    IsDebug = False
+'
+'    Exit Function
+'TrataErro:
+'    IsDebug = True
+'End Function
 Public Function IsDebug() As Boolean
-On Error GoTo TrataErro
-    Debug.Print 1 \ 0 'Divisao por zero, ocorre erro apenas em mode debug
-    IsDebug = False
-    
-    Exit Function
-TrataErro:
-    IsDebug = True
+   Dim x As Byte
+   Debug.Assert Not TestDebug(x)
+   IsDebug = (x = 1)
+End Function
+Private Function TestDebug(ByRef value As Byte) As Boolean
+   value = 1
+   TestDebug = False
 End Function
 
 Public Function IfNull(ByVal value As Variant, ByVal default As Variant)

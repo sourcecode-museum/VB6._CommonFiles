@@ -159,7 +159,7 @@ Public Function DialogConnINI(ByRef pProvider As String, ByRef pSource As String
   If pProvider <> "" And pSource <> "" Then
   
     If pSaveINI Then
-      Call UpdateProvider(pProvider, pSource)
+      Call UpdateINIConexao(pProvider, pSource)
     End If
     
     DialogConnINI = True
@@ -197,7 +197,7 @@ Public Sub LerInfoSistema()
   
 End Sub
 
-Public Sub UpdateProvider(ByVal pProvider As String, ByVal pSource As String)
+Public Sub UpdateINIConexao(ByVal pProvider As String, ByVal pSource As String)
   Dim ini As New SisFuncoes.cArqINI
   
   With ini
@@ -209,6 +209,15 @@ Public Sub UpdateProvider(ByVal pProvider As String, ByVal pSource As String)
   End With
 
   Set ini = Nothing
+End Sub
+
+Public Sub UpdateINISource(ByVal pSource As String)
+  Dim ini As New SisFuncoes.cArqINI
   
-  mtINIConexao.PathDB = pNewSource
+  With ini
+    .pathFile = GetPathINI
+    .Gravar "CONEXAO", "SOURCE", pSource
+  End With
+
+  Set ini = Nothing
 End Sub

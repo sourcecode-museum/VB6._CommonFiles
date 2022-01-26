@@ -276,8 +276,7 @@ Private Sub Label1_MouseDown(Index As Integer, Button As Integer, Shift As Integ
 End Sub
 
 Private Sub Label1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-  If Index = 0 Then Label1(Index).ForeColor = &H25B1DA
-  If Index = 4 Then Label1(Index).ForeColor = vbBlue
+  If Index = 0 Or Index = 4 Then Label1(Index).ForeColor = &H25B1DA
 End Sub
 
 Public Sub CloseIn(ByVal dwMilliseconds As Long)

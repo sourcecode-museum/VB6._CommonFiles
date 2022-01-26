@@ -460,6 +460,12 @@ Private Const cID       As Byte = 0
 Private Const cNome     As Byte = 1
 Private Const cCidade   As Byte = 2   'EXEMPLO DE CAMPO DE PESQUISA
 
+Private Type tRSPosition
+  AbsolutePosition  As Long
+  Bookmark          As Variant
+End Type
+Private mtRSPosition As tRSPosition
+
 Public Sub ShowForm()
   Dim sSQL As String
   
@@ -624,16 +630,30 @@ End Sub
 Private Sub dscMaster_DepoisUpdate(eOperacao As Insignia_DSControl.eDSOperacao)
   If eOperacao = -1 Then
     'Se não existe mais registros atualizar todo o controle
-    dscMaster.DataSource.Requery
+'    dscMaster.DataSource.Requery
   End If
 End Sub
 
 Private Sub dscMaster_MoveComplete(ByVal adReason As ADODB.EventReasonEnum, ByVal pError As ADODB.Error, adStatus As ADODB.EventStatusEnum, ByVal pRecordset As ADODB.Recordset)
   With pRecordset
-    If .EOF Or .BOF Then Exit Sub
-    If .EditMode = adEditAdd Then Exit Sub
+    If (.BOF Or .EOF) Then
+      'Ocorre quando estiver excluindo
+      If .AbsolutePosition <> mtRSPosition.AbsolutePosition Or mtRSPosition.Bookmark <> -1 Then
+        mtRSPosition.AbsolutePosition = .AbsolutePosition
+        mtRSPosition.Bookmark = -1
+        
+        Call LimparTela(False)
+      End If
+      
+    ElseIf .AbsolutePosition <> mtRSPosition.AbsolutePosition Or .Bookmark <> mtRSPosition.Bookmark Then
+      If .EditMode <> adEditAdd Then
+        Call ExibirDados(pRecordset)
+      End If
+      
+      mtRSPosition.AbsolutePosition = .AbsolutePosition
+      mtRSPosition.Bookmark = .Bookmark
+    End If
     
-    txtCampoFK(cCidade).Text = modQuerys.NomeCidadeUF(IfNull(!ID_CIDADE, 0))
   End With
 End Sub
 
@@ -649,9 +669,46 @@ Private Sub dscMaster_Operacao(ByVal eOperacao As Insignia_DSControl.eDSOperacao
   
   If bEdit Then
     Call MFormsShowGrid(Me, False)
+    
+    If eOperacao = opInclusao Then
+      Call LimparTela(True)
+    End If
+    
     mdlGeral.SetFocus txtCampo(cNome)
+    
+  Else
+    ' Ocorre sempre que CONFIRMAR OU CANCELAR operacao de inclusao e alteracao
+    Call ExibirDados(dscMaster.DataSource.RS)
   End If
   
+End Sub
+
+Private Sub ExibirDados(ByRef pRecordset As ADODB.Recordset)
+  With pRecordset
+    If Not (.EOF Or .BOF) Then
+      txtCampoFK(cCidade).Text = modQuerys.NomeCidadeUF(mdlGeral.IfNull(!ID_CIDADE, 0))
+    Else
+      ' Ocorre em exclusoes ou cancelamento de inclusao
+      Call LimparTela(False)
+    End If
+    
+  End With
+End Sub
+
+Private Sub LimparTela(ByVal pParaIncluir As Boolean)
+  Dim oC As Control
+  
+  For Each oC In txtCampoFK
+'    oC.Text = IIf(txtCampo(oC.Index).Tag = "Obrigatorio", "<OBRIGATÓRIO>", "")
+    oC.Text = ""
+  Next
+  
+  If pParaIncluir Then
+    ' PREENCHE VALORES DEFAULT
+'    txtCampo(cDTCad).Text = mdlGeral.ValorData([DT Atual])
+  End If
+  
+  dscMaster.Informe = ""
 End Sub
 
 Private Sub txtCampo_GotFocus(Index As Integer)
