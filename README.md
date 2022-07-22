@@ -1,2 +1,2 @@
-# vb6_CommonFiles
+# _CommonFiles
 Formulários, Classes e Módulos de uso comum entre os projetos
