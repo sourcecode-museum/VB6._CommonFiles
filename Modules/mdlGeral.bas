@@ -695,6 +695,9 @@ End Function
 Public Function IfNull(ByVal value As Variant, ByVal default As Variant)
   IfNull = IIf(IsNull(value), default, value)
 End Function
+Public Function IfNullOrEmpty(ByVal value As Variant, ByVal default As Variant)
+  IfNullOrEmpty = IIf(IsNull(value) Or IsEmpty(value), default, value)
+End Function
 
 Public Sub SetFocus(ByRef pControl As Object)
 On Error GoTo TrataErro

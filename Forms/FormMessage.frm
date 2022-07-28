@@ -267,7 +267,7 @@ Begin VB.Form FormMessage
    End
    Begin VB.Label lblCaption 
       BackColor       =   &H0049CAE0&
-      Caption         =   " :: QUALITÁ Revenda Auto - Sistema de Compra e Venda de Automovéis"
+      Caption         =   " App.EXEName"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   8.25
