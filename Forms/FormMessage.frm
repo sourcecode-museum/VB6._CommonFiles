@@ -21,6 +21,7 @@ Begin VB.Form FormMessage
    EndProperty
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   2970
@@ -235,7 +236,7 @@ Begin VB.Form FormMessage
       ForeColor       =   &H00212121&
       Height          =   1200
       Index           =   1
-      Left            =   790
+      Left            =   795
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   2  'Vertical
@@ -461,6 +462,7 @@ TrataErro:
   Unload Me
 End Function
 
+
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:23 - ShowMsgBox
 ' Author    : Heliomar P. Marques
@@ -486,6 +488,31 @@ Public Function ShowMsgBox(ByVal psPrompt As String, _
   ShowMsgBox = CampoInput.Text
   Unload Me
 End Function
+
+'---------------------------------------------------------------------------------------
+' Procedure : 28/08/2006 11:22 - ShowInfo
+' Author    : Heliomar P. Marques
+' Purpose   : Serve para mensagem apenas informativas não travando do aplicativo de chamada
+'---------------------------------------------------------------------------------------
+Public Sub ShowInfo(ByVal psPrompt As String, _
+                    Optional ByVal psTitulo As String, _
+                    Optional ByVal XLeft As Long = -1, _
+                    Optional ByVal YTop As Long = -1, _
+                    Optional ByVal pImagem As eImagem = imInformation)
+
+  Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
+
+  Call ResizeCaixaMensagem(pImagem = imEspacoTotal)
+  
+  CampoInput.Visible = False
+
+  Call CriarBotoes("&OK")
+
+  mbShowInput = False
+  Me.Show
+
+  SetWindowPos Me.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
+End Sub
 
 Public Property Get IconeMsg() As Image
   Set IconeMsg = imgIcone
@@ -625,31 +652,6 @@ Private Sub SetarValores(ByVal pPrompt As String, ByVal pTitulo As String, _
     imgIcone.Picture = ImageList1.ListImages(pImagem).Picture
   End If
   On Error GoTo 0
-End Sub
-
-'---------------------------------------------------------------------------------------
-' Procedure : 28/08/2006 11:22 - ShowInfo
-' Author    : Heliomar P. Marques
-' Purpose   : Serve para mensagem apenas informativas não travando do aplicativo de chamada
-'---------------------------------------------------------------------------------------
-Public Sub ShowInfo(ByVal psPrompt As String, _
-                    Optional ByVal psTitulo As String, _
-                    Optional ByVal XLeft As Long = -1, _
-                    Optional ByVal YTop As Long = -1, _
-                    Optional ByVal pImagem As eImagem = imInformation)
-
-  Call SetarValores(psPrompt, psTitulo, XLeft, YTop, pImagem)
-
-  Call ResizeCaixaMensagem(pImagem = imEspacoTotal)
-  
-  CampoInput.Visible = False
-
-  Call CriarBotoes("&OK")
-
-  mbShowInput = False
-  Me.Show
-
-  SetWindowPos Me.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
 End Sub
 
 Private Sub ResizeCaixaMensagem(ByVal pAmpliar As Boolean)

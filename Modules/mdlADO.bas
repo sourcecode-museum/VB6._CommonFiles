@@ -81,8 +81,9 @@ TrataErro:
   Call MGShowErro("mdlADO.AbrirRS")
 End Sub
 
-Public Sub AbrirDAT(ByRef pRS As ADODB.Recordset, ByVal pFullPath As String, Optional bNotVazio As Boolean = True)
- 
+Public Sub AbrirDAT(ByRef pRS As ADODB.Recordset, ByVal pFullPath As String, _
+                    Optional bNotVazio As Boolean = True, _
+                    Optional bShowErro As Boolean = True)
   On Error GoTo TrataErro
  
   If Not pRS Is Nothing Then
@@ -103,7 +104,9 @@ Public Sub AbrirDAT(ByRef pRS As ADODB.Recordset, ByVal pFullPath As String, Opt
   Exit Sub
 TrataErro:
   Set pRS = Nothing
-  Call MGShowErro("mdlADO.AbrirDAT")
+  If (bShowErro) Then
+    Call MGShowErro("mdlADO.AbrirDAT")
+  End If
 End Sub
 
 Public Sub Pesquisar(ByRef pRecordset As Object, ByVal DataField As String, ByVal Texto As String)

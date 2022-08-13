@@ -8,23 +8,24 @@ Option Explicit
 'Private mtINISistema As tpINISistema
 
 Type tpINIConexao
-    DataSource  As String
-    Provedor    As String
-    PathDB      As String
-    StrConexao  As String
-    BancoTipoMDB As Boolean
+    DataSource    As String
+    Provedor      As String
+    PathDB        As String
+    StrConexao    As String
+    BancoTipoMDB  As Boolean
 End Type
 Private mtINIConexao As tpINIConexao
 
 Type tSistema
 '  Empresa    As String
-  AutoUpdate     As Boolean
-  imgFundo       As String
-  ImgLogoMarca   As String
+  AutoUpdate      As Boolean
+  imgFundo        As String
+  ImgLogoMarca    As String
 End Type
 Private mtSistema As tSistema
 
 Global gsPathINI As String
+
 
 'Public Property Get INISistema() As tpINISistema
 '   INISistema = mtINISistema
@@ -50,7 +51,7 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
-        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & App.EXEName & ".mdb"
+        .Gravar "CONEXAO", "SOURCE", App.path & "\" & App.EXEName & ".mdb"
     End With
     
     Set oArqINI = Nothing
@@ -59,10 +60,14 @@ End Sub
 Private Function GetPathINI() As String
     Dim sPathINI As String
     
-    If Right$(App.Path, 1) <> "\" Then
-        sPathINI = App.Path & "\"
+    If gsPathINI <> "" Then
+      sPathINI = gsPathINI
+    Else
+      If Right$(App.path, 1) <> "\" Then
+          sPathINI = App.path & "\"
+      End If
+      sPathINI = sPathINI & "CONFIG.INI"
     End If
-    sPathINI = sPathINI & "CONFIG.INI"
     
     If Not mdlGeral.FileExist(sPathINI) Then Call CriarArqConfig(sPathINI)
     
@@ -70,7 +75,7 @@ Private Function GetPathINI() As String
     GetPathINI = sPathINI
 End Function
 
-Public Function LerINI2StrConn() As String
+Public Function CarregarInfoConexao() As String
     Dim oSis As SisFuncoes.cSisFuncoes
     
     Dim sBase As String, sDBDados() As String
@@ -93,7 +98,7 @@ Public Function LerINI2StrConn() As String
     
         If Left$(sSource, 1) = "\" Then
             'Com 2 Barras ta buscando da rede
-            If Left$(sSource, 2) <> "\\" Then sSource = App.Path & sSource
+            If Left$(sSource, 2) <> "\\" Then sSource = App.path & sSource
         End If
     
         'este pega o banco que de acordo com a empresa que seleciona
@@ -134,7 +139,7 @@ SetFuncao:
         Let INIConexao = VarConexao
     End With
     
-    LerINI2StrConn = sProvSource
+    CarregarInfoConexao = sProvSource
     Set oSis = Nothing
     
     Exit Function
@@ -144,6 +149,7 @@ BrowserPathBD:
         sSource = " DATA SOURCE = " & sPathDB & ";"
         sProvSource = sProvider & sSource
         
+        oSis.ArqINI.Gravar "CONEXAO", "SOURCE", sPathDB
         GoTo SetFuncao
     Else
         End
@@ -177,7 +183,7 @@ Public Property Let Sistema(vNewValue As tSistema)
    mtSistema = vNewValue
 End Property
 
-Public Sub LerInfoSistema()
+Public Sub CarregarInfoSistema()
   Dim varSistema As tSistema
   Dim value As String
   
@@ -221,3 +227,26 @@ Public Sub UpdateINISource(ByVal pSource As String)
 
   Set ini = Nothing
 End Sub
+
+Public Sub GravarValor(pSecao As String, pChave As String, pValor As String)
+Dim ini As New SisFuncoes.cArqINI
+  
+  With ini
+    .pathFile = gsPathINI
+    .Gravar pSecao, pChave, pValor
+  End With
+
+  Set ini = Nothing
+End Sub
+Public Function LerValor(pSecao As String, pChave As String, Optional pValor As String = "")
+  Dim ini As New SisFuncoes.cArqINI
+  Dim sRes As String
+  
+  With ini
+    .pathFile = gsPathINI
+    sRes = .Ler(pSecao, pChave, pValor)
+  End With
+
+  Set ini = Nothing
+  LerValor = sRes
+End Function
