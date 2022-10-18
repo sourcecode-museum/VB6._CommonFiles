@@ -33,7 +33,7 @@ Public Type RECT
 End Type
 
 'Sempre no Topo
-Declare Function SetWindowPos Lib "user32" (ByVal h&, ByVal hb&, ByVal x&, ByVal y&, ByVal cx&, ByVal cy&, ByVal f&) As Long
+Declare Function SetWindowPos Lib "user32" (ByVal h&, ByVal hb&, ByVal X&, ByVal y&, ByVal cx&, ByVal cy&, ByVal f&) As Long
 Private Const SWP_NOMOVE = &H2
 Private Const SWP_NOSIZE = &H1
 Private Const flags = SWP_NOMOVE Or SWP_NOSIZE
@@ -442,12 +442,14 @@ Finaliza:
   End If
 End Function
 
-Public Function ExtractResData(sID As String, sType As String, PathArqDestino As String) As Boolean
+Public Function ExtractResData(sID As String, sType As String, PathArqDestino As String, Optional ByVal exitIfExist As Boolean = False) As Boolean
   Dim mFreeFile As Integer, bExist As Boolean
   Dim FileTmp As String, Buffer As String
   Dim vData As Variant, b As Long
 
   If FileExist(PathArqDestino) Then
+    If exitIfExist = True Then Exit Function
+    
     If MsgBox("Arquivo já existe!" & vbCrLf & vbCrLf & "Deseja substitui-ló?", _
               vbQuestion + vbYesNo, App.ProductName) = vbYes Then
         
@@ -635,18 +637,18 @@ Public Function CalculaIdade(ByVal XData) As String
   Else
     On Error GoTo Sair:
     '--------Calculando Anos
-    nAnos = Trim(Str(Int((Val(Format(Date, "yyyymmdd")) - Val(Format(XData, "yyyymmdd"))) / 10000)))
+    nAnos = Trim(str(Int((Val(Format(Date, "yyyymmdd")) - Val(Format(XData, "yyyymmdd"))) / 10000)))
     
     '--------Calculando Mêses
     nMes = Int((Val(Format(Date, "mmdd")) - Val(Format(XData, "mmdd"))) / 100)
-    If nMes < 0 Then nMes = Trim(Str(nMes + 12))
+    If nMes < 0 Then nMes = Trim(str(nMes + 12))
     
     '--------Calculando Dias
     nDias = Day(XData)
     If nDias > Day(Date) Then
-      nDias = Trim(Str(30 - (nDias - Day(Date))))
+      nDias = Trim(str(30 - (nDias - Day(Date))))
     Else
-      nDias = Trim(Str(Day(Date) - nDias))
+      nDias = Trim(str(Day(Date) - nDias))
     End If
         
     '--------Preenchendo Anos
@@ -683,9 +685,9 @@ End Function
 '    IsDebug = True
 'End Function
 Public Function IsDebug() As Boolean
-   Dim x As Byte
-   Debug.Assert Not TestDebug(x)
-   IsDebug = (x = 1)
+   Dim X As Byte
+   Debug.Assert Not TestDebug(X)
+   IsDebug = (X = 1)
 End Function
 Private Function TestDebug(ByRef value As Byte) As Boolean
    value = 1
@@ -740,18 +742,18 @@ Public Function IsValidCPF(ByVal pCPF As String) As Boolean
     Dim n As Integer 'numero
     Dim d As Integer 'digito
     Dim m As Integer 'multiplo
-    Dim x As Integer 'validacoes
+    Dim X As Integer 'validacoes
     Dim p As Integer 'posicao do numero
     
-    For x = 0 To 9
-      Debug.Print String(11, x & "")
-      If pCPF = String(11, x & "") Then Exit Function
+    For X = 0 To 9
+      Debug.Print String(11, X & "")
+      If pCPF = String(11, X & "") Then Exit Function
     Next
     
-    For x = 0 To 1
+    For X = 0 To 1
       n = 0
-      For p = 0 To 8 + x
-        m = (10 + x - p)
+      For p = 0 To 8 + X
+        m = (10 + X - p)
         'Debug.Print Val(Mid(pCPF, p + 1, 1)), m, n
         n = n + Val(Mid(pCPF, p + 1, 1)) * m
       Next
@@ -760,7 +762,7 @@ Public Function IsValidCPF(ByVal pCPF As String) As Boolean
       If d = 10 Or d = 11 Then d = 0
 
       'Valida o digito verificador
-      If d <> Val(Mid(pCPF, 10 + x, 1)) Then
+      If d <> Val(Mid(pCPF, 10 + X, 1)) Then
         Exit Function
       End If
 
@@ -786,18 +788,18 @@ Public Function IsValidCNPJ(ByVal pCNPJ As String) As Boolean
     Dim n As Integer 'numero
     Dim d As Integer 'digito
     Dim m As Integer 'multiplo
-    Dim x As Integer 'validacoes
+    Dim X As Integer 'validacoes
     Dim p As Integer 'posicao do numero
     
-    For x = 0 To 9
+    For X = 0 To 9
 '      Debug.Print String(14, x & "")
-      If pCNPJ = String(14, x & "") Then Exit Function
+      If pCNPJ = String(14, X & "") Then Exit Function
     Next
     
-    For x = 0 To 1
-      m = 5 + x
+    For X = 0 To 1
+      m = 5 + X
       n = 0
-      For p = 1 To 12 + x
+      For p = 1 To 12 + X
         If m < 2 Then m = 9
         
         n = n + Mid(pCNPJ, p, 1) * m
@@ -808,7 +810,7 @@ Public Function IsValidCNPJ(ByVal pCNPJ As String) As Boolean
       If d = 10 Or d = 11 Then d = 0
       
       'Valida o digito verificador
-      If d <> Val(Mid(pCNPJ, 13 + x, 1)) Then
+      If d <> Val(Mid(pCNPJ, 13 + X, 1)) Then
         Exit Function
       End If
     Next
@@ -816,3 +818,4 @@ Public Function IsValidCNPJ(ByVal pCNPJ As String) As Boolean
   
   IsValidCNPJ = True
 End Function
+
