@@ -1,16 +1,16 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
-* text eol=auto
-*.bas text eol=crlf
-*.frm text eol=crlf
-*.log text eol=crlf
+# Declare files that will always have CRLF line endings on checkout.
 *.vbp text eol=crlf
+*.frm text eol=crlf
 *.cls text eol=crlf
-*.vbw text eol=crlf
+*.bas text eol=crlf
 *.dsr text eol=crlf
 *.ini text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
 *.res binary
 *.RES binary
 *.frx binary
+*.ctx binary
 *.exe binary
 *.dll binary
 *.ico binary
