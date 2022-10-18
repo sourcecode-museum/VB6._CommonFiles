@@ -234,7 +234,7 @@ End Sub
 
 Private Sub Form_Load()
   Label1(2).Caption = App.ProductName
-  Label1(3).Caption = "Versão: " & App.Major & "." & App.Minor & "." & App.Revision
+  Label1(3).Caption = "Versão: " & App.Major & "." & Format(App.Minor, "00") & "." & Format(App.Revision, "000")
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

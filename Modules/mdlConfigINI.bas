@@ -19,6 +19,7 @@ Private mtINIConexao As tpINIConexao
 Type tSistema
 '  Empresa    As String
   AutoUpdate      As Boolean
+  InfoMemoria     As Boolean
   imgFundo        As String
   ImgLogoMarca    As String
 End Type
@@ -51,7 +52,7 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
-        .Gravar "CONEXAO", "SOURCE", App.path & "\" & App.EXEName & ".mdb"
+        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & App.EXEName & ".mdb"
     End With
     
     Set oArqINI = Nothing
@@ -63,8 +64,8 @@ Private Function GetPathINI() As String
     If gsPathINI <> "" Then
       sPathINI = gsPathINI
     Else
-      If Right$(App.path, 1) <> "\" Then
-          sPathINI = App.path & "\"
+      If Right$(App.Path, 1) <> "\" Then
+          sPathINI = App.Path & "\"
       End If
       sPathINI = sPathINI & "CONFIG.INI"
     End If
@@ -98,7 +99,7 @@ Public Function CarregarInfoConexao() As String
     
         If Left$(sSource, 1) = "\" Then
             'Com 2 Barras ta buscando da rede
-            If Left$(sSource, 2) <> "\\" Then sSource = App.path & sSource
+            If Left$(sSource, 2) <> "\\" Then sSource = App.Path & sSource
         End If
     
         'este pega o banco que de acordo com a empresa que seleciona
@@ -113,7 +114,10 @@ Public Function CarregarInfoConexao() As String
         End If
     
         If Not FileExist(sPathDB) Then
-            GoTo BrowserPathBD
+            Call mdlGeral.ExtractResData("BDados", "Custom", App.Path & "\QRAuto.MDB", True)
+            If Not FileExist(sPathDB) Then
+              GoTo BrowserPathBD
+            End If
         End If
     
         sSource = " DATA SOURCE = " & sSource & ";"
@@ -185,15 +189,17 @@ End Property
 
 Public Sub CarregarInfoSistema()
   Dim varSistema As tSistema
-  Dim value As String
+  Dim Value As String
   
   Set goArqINI = New SisFuncoes.cArqINI
   With goArqINI
     .pathFile = GetPathINI()
     '      varSistema.Empresa = .Ler("SISTEMA", "EMPRESA", "heliomarpm@hotmail.com")
     
-    value = .Ler("SISTEMA", "AUTO_UPDATE", "S") = "S"
-    varSistema.AutoUpdate = value = "S" Or value = "True" Or value = "1"
+    Value = .Ler("SISTEMA", "AUTO_UPDATE", "S") = "S"
+    varSistema.AutoUpdate = Value = "S" Or Value = "True" Or Value = "1"
+    Value = .Ler("SISTEMA", "INFO_MEM", "S") = "S"
+    varSistema.InfoMemoria = Value = "S" Or Value = "True" Or Value = "1"
     varSistema.imgFundo = .Ler("SISTEMA", "IMG_BACKGROUND", "Fundo.jpg")
     varSistema.ImgLogoMarca = .Ler("SISTEMA", "IMG_LOGO", "Logo.jpg")
     

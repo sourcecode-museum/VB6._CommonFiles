@@ -9,7 +9,7 @@ Begin VB.Form FormPesquisa
    ClientHeight    =   4950
    ClientLeft      =   1965
    ClientTop       =   2685
-   ClientWidth     =   7950
+   ClientWidth     =   7965
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -24,16 +24,42 @@ Begin VB.Form FormPesquisa
    LinkTopic       =   "Form1"
    Picture         =   "FormPesquisa.frx":058A
    ScaleHeight     =   4950
-   ScaleWidth      =   7950
+   ScaleWidth      =   7965
    StartUpPosition =   1  'CenterOwner
+   Begin Insignia_Frame.ideFrame Panel 
+      Align           =   2  'Align Bottom
+      Height          =   405
+      Index           =   3
+      Left            =   0
+      Top             =   3105
+      Width           =   7965
+      _ExtentX        =   14049
+      _ExtentY        =   714
+      BorderExt       =   6
+      BorderPaint     =   10
+      BackColor       =   16777215
+      BackColorB      =   15987699
+      GradientStyle   =   1
+      Caption         =   "Clique duas vezes ou tecle [ENTER] para selecionar o registro"
+      ForeColor       =   4210752
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Century Gothic"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin MSDataGridLib.DataGrid DataGrid1 
       Align           =   1  'Align Top
       Height          =   1920
       Left            =   0
       TabIndex        =   7
       Top             =   570
-      Width           =   7950
-      _ExtentX        =   14023
+      Width           =   7965
+      _ExtentX        =   14049
       _ExtentY        =   3387
       _Version        =   393216
       AllowUpdate     =   0   'False
@@ -109,8 +135,8 @@ Begin VB.Form FormPesquisa
       Index           =   2
       Left            =   0
       Top             =   4650
-      Width           =   7950
-      _ExtentX        =   14023
+      Width           =   7965
+      _ExtentX        =   14049
       _ExtentY        =   529
       BorderExt       =   6
       BorderWidth     =   5
@@ -134,8 +160,8 @@ Begin VB.Form FormPesquisa
       Index           =   0
       Left            =   0
       Top             =   0
-      Width           =   7950
-      _ExtentX        =   14023
+      Width           =   7965
+      _ExtentX        =   14049
       _ExtentY        =   1005
       BorderExt       =   6
       BorderPaint     =   8
@@ -169,8 +195,8 @@ Begin VB.Form FormPesquisa
       Index           =   1
       Left            =   0
       Top             =   3510
-      Width           =   7950
-      _ExtentX        =   14023
+      Width           =   7965
+      _ExtentX        =   14049
       _ExtentY        =   2011
       BorderExt       =   6
       BorderPaint     =   10
@@ -178,7 +204,7 @@ Begin VB.Form FormPesquisa
       BackColor       =   15987699
       BackColorB      =   16579836
       GradientStyle   =   4
-      Caption         =   "Registros encontrados:"
+      Caption         =   "Registros encontrados: "
       ForeColor       =   0
       CaptionAlign    =   4
       CaptionAlignPos =   1
@@ -516,7 +542,7 @@ Private Sub DataGrid1_DblClick()
     If msaIndexColReturn <> "" And DataGrid1.Row > -1 Then
     a = Split(msaIndexColReturn, "|")
     For i = 0 To UBound(a)
-      msaValoresRetorno = msaValoresRetorno & DataGrid1.Columns(a(i)).value & "|"
+      msaValoresRetorno = msaValoresRetorno & DataGrid1.Columns(a(i)).Value & "|"
     Next
     msaValoresRetorno = Mid$(msaValoresRetorno, 1, Len(msaValoresRetorno) - 1)
     Unload Me
@@ -667,7 +693,7 @@ End Sub
 Private Sub TimerResize_Timer()
   On Error Resume Next
   DataGrid1.Move 0, Panel(0).Height, ScaleWidth
-  DataGrid1.Height = (Panel(1).Top - DataGrid1.Top) + 10
+  DataGrid1.Height = (Panel(3).Top - DataGrid1.Top) + 10
   On Error GoTo 0
   
   TimerResize.Enabled = False
