@@ -141,7 +141,7 @@ Begin VB.Form FormPesquisa
       BorderExt       =   6
       BorderWidth     =   5
       BackColor       =   15987699
-      Caption         =   "contato: codeuapp@gmail.com"
+      Caption         =   "App.LegalTrademarks"
       ForeColor       =   8421504
       CaptionAlign    =   3
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -542,7 +542,7 @@ Private Sub DataGrid1_DblClick()
     If msaIndexColReturn <> "" And DataGrid1.Row > -1 Then
     a = Split(msaIndexColReturn, "|")
     For i = 0 To UBound(a)
-      msaValoresRetorno = msaValoresRetorno & DataGrid1.Columns(a(i)).Value & "|"
+      msaValoresRetorno = msaValoresRetorno & DataGrid1.Columns(a(i)).value & "|"
     Next
     msaValoresRetorno = Mid$(msaValoresRetorno, 1, Len(msaValoresRetorno) - 1)
     Unload Me
@@ -641,7 +641,7 @@ Private Sub DataGrid1_KeyDown(KeyCode As Integer, Shift As Integer)
   If KeyCode = vbKeyReturn Then DataGrid1_DblClick
 End Sub
 
-Private Sub DataGrid1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub DataGrid1_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
   If Button = vbRightButton _
     And mRSQuery.RecordCount > 1 Then
     PopupMenu menuPop
@@ -662,7 +662,7 @@ Private Sub Form_Load()
   menuPop.Visible = False
 '  Me.Caption = MDIMain.Caption
   txtCampo(0).Width = cTXTWidth
-  Panel(2).Caption = App.LegalCopyright
+  Panel(2).Caption = gtApp.URL
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)

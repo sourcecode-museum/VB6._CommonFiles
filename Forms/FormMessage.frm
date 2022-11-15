@@ -339,12 +339,12 @@ Private Const SWP_NOSIZE = &H1
 Private Const SWP_NOMOVE = &H2
 Private Const SWP_NOACTIVATE = &H10
 Private Const SWP_SHOWWINDOW = &H40
-Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
+Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
 '=================================
 'NA FRENTE
-'   SetWindowPos Me.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
+'   SetWindowPos Me.hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
 'ATRAZ
-'   SetWindowPos Me.hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
+'   SetWindowPos Me.hWnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
 '=================================
 
 Private Const WM_NCLBUTTONDOWN = &HA1
@@ -555,6 +555,7 @@ Private Sub CriarBotoes(ByVal psCapButtonsArray As String)
   Dim aCap() As String
   Dim i As Integer
   Dim nLeftPadrao As Integer
+  Dim nWidth As Long
   Dim nCount As Integer
 
   nLeftPadrao = cmdButtons(0).Left
@@ -573,12 +574,23 @@ Private Sub CriarBotoes(ByVal psCapButtonsArray As String)
   'Numero de Botoes que pode ser incluido,
   'os demais sao ignorados
   If nCount > 2 Then nCount = 2
-
-  For i = 0 To nCount
+  
+  For i = nCount To 0 Step -1
     If i > 0 Then Load cmdButtons(i)
     With cmdButtons(i)
       .Caption = aCap(i)
-      .Left = nLeftPadrao - (.Width * (nCount - i))
+      If TextWidth(aCap(i)) + 200 > .Width Then
+        .Width = TextWidth(aCap(i)) + 200
+      End If
+      
+'      .Left = nLeftPadrao - (.Width * (nCount - i))
+      
+      If i = nCount Then
+        .Left = Me.ScaleWidth - (.Width + 60)
+      Else
+        .Left = cmdButtons(i + 1).Left - .Width - 15
+      End If
+
       .Visible = True
     End With
   Next
@@ -614,7 +626,7 @@ Private Sub Form_Load()
   Dim sCap As String
 
   sCap = App.CompanyName
-  lblRotulo.Caption = App.LegalCopyright
+  lblRotulo.Caption = gtApp.URL
 
   TextoMensagem.Text = ""
   imgIcone.BorderStyle = 0
@@ -628,7 +640,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
   Set FormMessage = Nothing
 End Sub
 
-Private Sub lblCaption_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub lblCaption_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
   Call DragForm
 End Sub
 
@@ -636,7 +648,7 @@ Private Sub SetarValores(ByVal pPrompt As String, ByVal pTitulo As String, _
                          ByVal XLeft As Long, ByVal YTop As Long, _
                          ByVal pImagem As eImagem)
 
-  If pTitulo = "" Then pTitulo = App.EXEName
+  If pTitulo = "" Then pTitulo = App.ProductName
   lblCaption.Caption = pTitulo
 
   Me.Top = IIf(YTop = -1, (Screen.Height - Me.Height) / 2, YTop)

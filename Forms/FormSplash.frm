@@ -2,10 +2,10 @@ VERSION 5.00
 Begin VB.Form FormSplash 
    BackColor       =   &H00000000&
    BorderStyle     =   0  'None
-   ClientHeight    =   3270
+   ClientHeight    =   3510
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   4680
+   ClientWidth     =   5790
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -21,10 +21,30 @@ Begin VB.Form FormSplash
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3270
-   ScaleWidth      =   4680
+   ScaleHeight     =   3510
+   ScaleWidth      =   5790
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Label Label1 
+      BackStyle       =   0  'Transparent
+      Caption         =   "App.Comments"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00404040&
+      Height          =   930
+      Index           =   6
+      Left            =   510
+      TabIndex        =   6
+      Top             =   1005
+      Width           =   3165
+   End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -41,7 +61,7 @@ Begin VB.Form FormSplash
       ForeColor       =   &H00404040&
       Height          =   195
       Index           =   3
-      Left            =   300
+      Left            =   330
       TabIndex        =   3
       Top             =   2085
       Width           =   1485
@@ -59,18 +79,18 @@ Begin VB.Form FormSplash
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00404040&
-      Height          =   1230
+      Height          =   345
       Index           =   2
       Left            =   345
       TabIndex        =   2
-      Top             =   600
-      Width           =   3150
+      Top             =   555
+      Width           =   3750
       WordWrap        =   -1  'True
    End
    Begin VB.Image imgIcon 
       Height          =   435
-      Left            =   3855
-      Top             =   600
+      Left            =   4935
+      Top             =   645
       Width           =   435
    End
    Begin VB.Shape Shape1 
@@ -78,8 +98,8 @@ Begin VB.Form FormSplash
       BorderWidth     =   15
       Height          =   795
       Index           =   0
-      Left            =   3675
-      Top             =   420
+      Left            =   4755
+      Top             =   465
       Width           =   795
    End
    Begin VB.Shape Shape1 
@@ -88,8 +108,8 @@ Begin VB.Form FormSplash
       FillColor       =   &H008D550A&
       Height          =   795
       Index           =   1
-      Left            =   3210
-      Top             =   810
+      Left            =   4290
+      Top             =   855
       Width           =   795
    End
    Begin VB.Shape Shape1 
@@ -97,8 +117,8 @@ Begin VB.Form FormSplash
       BorderWidth     =   15
       Height          =   795
       Index           =   2
-      Left            =   2790
-      Top             =   1350
+      Left            =   3870
+      Top             =   1395
       Width           =   795
    End
    Begin VB.Label Label1 
@@ -117,7 +137,7 @@ Begin VB.Form FormSplash
       ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   0
-      Left            =   4440
+      Left            =   5505
       TabIndex        =   0
       Top             =   30
       Width           =   195
@@ -133,8 +153,8 @@ Begin VB.Form FormSplash
       Index           =   5
       Left            =   105
       TabIndex        =   5
-      Top             =   2340
-      Width           =   4560
+      Top             =   2490
+      Width           =   5670
       WordWrap        =   -1  'True
    End
    Begin VB.Label Label1 
@@ -189,16 +209,17 @@ Begin VB.Form FormSplash
       Width           =   135
    End
    Begin VB.Label Label1 
+      Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Contato: codeuapp@gmail.com"
+      Caption         =   "gtApp.URL"
       ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   4
-      Left            =   2325
+      Left            =   4905
       TabIndex        =   4
-      Top             =   3015
-      Width           =   2250
+      Top             =   3195
+      Width           =   780
    End
    Begin VB.Shape Shape1 
       BackStyle       =   1  'Opaque
@@ -206,7 +227,7 @@ Begin VB.Form FormSplash
       Index           =   4
       Left            =   105
       Top             =   240
-      Width           =   4560
+      Width           =   5670
    End
 End
 Attribute VB_Name = "FormSplash"
@@ -234,14 +255,16 @@ End Sub
 
 Private Sub Form_Load()
   Label1(2).Caption = App.ProductName
+  Label1(6).Caption = App.Comments
   Label1(3).Caption = "Versão: " & App.Major & "." & Format(App.Minor, "00") & "." & Format(App.Revision, "000")
+  Label1(4).Caption = gtApp.URL
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
   Call DragForm
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
   Label1(0).ForeColor = vbWhite
   Label1(4).ForeColor = vbWhite
 End Sub
@@ -253,14 +276,15 @@ End Sub
 Private Sub Label1_Click(Index As Integer)
     On Local Error Resume Next
     
-    Dim email As String
+    Dim Email As String
     
     Select Case Index
     Case 0
         Unload Me
     Case 4
-        email = Replace(Label1(4).Caption, "Contato: ", "mailto:")
-        Call ShellExecute(0&, vbNullString, email, vbNullString, "C:\", SW_SHOWNORMAL)
+'        email = Replace(Label1(4).Caption, "Contato: ", "mailto:")
+'        Call ShellExecute(0&, vbNullString, email, vbNullString, "C:\", SW_SHOWNORMAL)
+      Call ShellExecute(Me.hwnd, "open", Label1(4).Caption, vbNullString, vbNullString, SW_SHOWNORMAL)
     End Select
 End Sub
 
@@ -271,11 +295,11 @@ Public Sub DragForm()
   Call SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0)
 End Sub
 
-Private Sub Label1_MouseDown(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Label1_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
   If Index = 1 Then Call DragForm
 End Sub
 
-Private Sub Label1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Label1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
   If Index = 0 Or Index = 4 Then Label1(Index).ForeColor = &H25B1DA
 End Sub
 

@@ -364,7 +364,8 @@ Public Function UpdateValores(ByVal psTabela As String, _
   Next
   
   SQL = "UPDATE " & psTabela & " SET " & Mid(SQLValores, 3) & " WHERE " & pSQLWhere
-  gOConn.Execute SQL
+  Dim result As Variant
+  result = gOConn.Execute(SQL)
   UpdateValores = True
   Exit Function
 TrataErro:
@@ -374,6 +375,7 @@ End Function
 
 Public Function IDExiste(ByVal pID As Variant, ByVal pTabela As String)
   Dim RS As ADODB.Recordset
+  Dim rs As ADODB.Recordset
   Dim SQL As String
   
   If pID = 0 Or pID = "" Then Exit Function

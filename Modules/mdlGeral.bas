@@ -451,7 +451,7 @@ Public Function ExtractResData(sID As String, sType As String, PathArqDestino As
     If exitIfExist = True Then Exit Function
     
     If MsgBox("Arquivo já existe!" & vbCrLf & vbCrLf & "Deseja substitui-ló?", _
-              vbQuestion + vbYesNo, App.ProductName) = vbYes Then
+              vbQuestion + vbYesNo, App.Title) = vbYes Then
         
       bExist = True
     Else
@@ -695,7 +695,12 @@ Private Function TestDebug(ByRef value As Byte) As Boolean
 End Function
 
 Public Function IfNull(ByVal value As Variant, ByVal default As Variant)
+On Error GoTo TrataErro
   IfNull = IIf(IsNull(value), default, value)
+  Exit Function
+TrataErro:
+  IfNull = default
+  Err.Clear
 End Function
 Public Function IfNullOrEmpty(ByVal value As Variant, ByVal default As Variant)
   IfNullOrEmpty = IIf(IsNull(value) Or IsEmpty(value), default, value)

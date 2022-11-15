@@ -47,12 +47,12 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
     
     With oArqINI
         .pathFile = sPathFile
-        .Gravar "SISTEMA", "EMPRESA", App.LegalTrademarks
+'        .Gravar "SISTEMA", "EMPRESA", App.LegalTrademarks
         .Gravar "SISTEMA", "AUTO_UPDATE", "S"
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
-        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & App.EXEName & ".mdb"
+        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & gtApp.NameOriginal & ".MDB"
     End With
     
     Set oArqINI = Nothing
@@ -114,7 +114,7 @@ Public Function CarregarInfoConexao() As String
         End If
     
         If Not FileExist(sPathDB) Then
-            Call mdlGeral.ExtractResData("BDados", "Custom", App.Path & "\QRAuto.MDB", True)
+            Call mdlGeral.ExtractResData("BDados", "Custom", App.Path & "\" & gtApp.NameOriginal & ".MDB", True)
             If Not FileExist(sPathDB) Then
               GoTo BrowserPathBD
             End If
@@ -189,17 +189,17 @@ End Property
 
 Public Sub CarregarInfoSistema()
   Dim varSistema As tSistema
-  Dim Value As String
+  Dim value As String
   
   Set goArqINI = New SisFuncoes.cArqINI
   With goArqINI
     .pathFile = GetPathINI()
     '      varSistema.Empresa = .Ler("SISTEMA", "EMPRESA", "heliomarpm@hotmail.com")
     
-    Value = .Ler("SISTEMA", "AUTO_UPDATE", "S") = "S"
-    varSistema.AutoUpdate = Value = "S" Or Value = "True" Or Value = "1"
-    Value = .Ler("SISTEMA", "INFO_MEM", "S") = "S"
-    varSistema.InfoMemoria = Value = "S" Or Value = "True" Or Value = "1"
+    value = .Ler("SISTEMA", "AUTO_UPDATE", "S")
+    varSistema.AutoUpdate = value = "S" Or value = "True" Or value = "1"
+    value = .Ler("SISTEMA", "INFO_MEM", "N")
+    varSistema.InfoMemoria = value = "S" Or value = "True" Or value = "1"
     varSistema.imgFundo = .Ler("SISTEMA", "IMG_BACKGROUND", "Fundo.jpg")
     varSistema.ImgLogoMarca = .Ler("SISTEMA", "IMG_LOGO", "Logo.jpg")
     
@@ -230,6 +230,19 @@ Public Sub UpdateINISource(ByVal pSource As String)
     .pathFile = GetPathINI
     .Gravar "CONEXAO", "SOURCE", pSource
   End With
+
+  Set ini = Nothing
+End Sub
+
+
+Public Sub UpdateAutoUpdate(ByVal pValue As Boolean)
+  Dim ini As New SisFuncoes.cArqINI
+  
+  With ini
+    .pathFile = GetPathINI
+    .Gravar "SISTEMA", "AUTO_UPDATE", IIf(pValue, "S", "N")
+  End With
+  mtSistema.AutoUpdate = pValue
 
   Set ini = Nothing
 End Sub
