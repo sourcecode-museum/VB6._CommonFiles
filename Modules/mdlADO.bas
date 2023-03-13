@@ -375,7 +375,6 @@ End Function
 
 Public Function IDExiste(ByVal pID As Variant, ByVal pTabela As String)
   Dim RS As ADODB.Recordset
-  Dim rs As ADODB.Recordset
   Dim SQL As String
   
   If pID = 0 Or pID = "" Then Exit Function

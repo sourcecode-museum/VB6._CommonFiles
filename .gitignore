@@ -14,5 +14,8 @@
 *.lib
 *.lvw
 *.dca
-<name of built binary, exe, dll or ocx>
-QRAuto/Package/Support/
+*.ldb
+*.obj
+
+Thumbs.db
+
