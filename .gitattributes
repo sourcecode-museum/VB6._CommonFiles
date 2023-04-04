@@ -11,6 +11,9 @@
 *.ini text eol=crlf
 
 # Denote all files that are truly binary and should not be modified.
+*.zip binary
+*.rar binary
+*.7z binary
 *.res binary
 *.RES binary
 *.frx binary
