@@ -339,7 +339,7 @@ Private Const SWP_NOSIZE = &H1
 Private Const SWP_NOMOVE = &H2
 Private Const SWP_NOACTIVATE = &H10
 Private Const SWP_SHOWWINDOW = &H40
-Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
+Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
 '=================================
 'NA FRENTE
 '   SetWindowPos Me.hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
@@ -461,7 +461,6 @@ TrataErro:
   ShowMsgBox "Erro na Lista de Opções!", "Erro: ShowInputCombo", "Fechar", , , imCritical
   Unload Me
 End Function
-
 
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:23 - ShowMsgBox
