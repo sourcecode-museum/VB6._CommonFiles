@@ -3,7 +3,7 @@ Option Explicit
 Global goArqINI As SisFuncoes.cArqINI
 Private mColShellApp As Collection 'Colecao de nWnd dos Aplicativos Externos abertos
 
-'=======#Inicio Declaraï¿½ï¿½es de API
+'=======#Inicio Declarações de API
 
 'Manter os Aplicativos externos como Filhos do Aplicativo
 Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Long, ByVal lpWindowName As Long) As Long
@@ -39,7 +39,7 @@ Private Const SWP_NOSIZE = &H1
 Private Const flags = SWP_NOMOVE Or SWP_NOSIZE
 Private Const HWND_TOPMOST = -1
 Private Const HWND_NOTOPMOST = -2
-'=======#Fim Declaraï¿½ï¿½es de API
+'=======#Fim Declarações de API
 
 
 'Colocando os Controles em modo de Flat
@@ -64,7 +64,7 @@ Private Const SWP_FRAMECHANGED = &H20
 'Private Const SWP_NOMOVE = &H2
 '==========Fim Flat
 
-Enum geDataPadrï¿½o
+Enum geDataPadrao
   [DT Atual] = 0
   [DT IniMes] = 1
   [DT FimMes] = 2
@@ -120,7 +120,7 @@ Public Sub EnterTab(KeyCode As Integer, Shift As Integer)
   End If
 End Sub
 
-'Funï¿½ï¿½o para abreviar nomes Proprios
+'Função para abreviar nomes Proprios
 'Ex: "Heliomar Pereira Marques dos Santos" => "Heliomar P. M. Dos Santos"
 Public Function AbreviaNome(psNome As String, Optional TCase As VbStrConv = vbUpperCase)
   Dim aNomes() As String
@@ -129,15 +129,15 @@ Public Function AbreviaNome(psNome As String, Optional TCase As VbStrConv = vbUp
   
   psNome = Trim$(psNome)
   
-  aNomes() = Split(psNome, " ") 'Array ï¿½ de Base Zero
+  aNomes() = Split(psNome, " ") 'Array é de Base Zero
   nCount = UBound(aNomes)
-  'Abreviar a partir do segundo nome, exceto o ï¿½ltimo.
+  'Abreviar a partir do segundo nome, exceto o último.
   If nCount > 1 Then
     sTemp = aNomes(0) & Chr(32)
     For i = 1 To nCount - 1
-      'Contï¿½m mais de 3 letras? (ignorar de, da, das, do, dos, etc.)}
+      'Contém mais de 3 letras? (ignorar de, da, das, do, dos, etc.)}
       If Len(aNomes(i)) > 3 Then
-        'Se nï¿½o. Pega apenas a primeira letra do nome e coloca um ponto apï¿½s.
+        'Se não. Pega apenas a primeira letra do nome e coloca um ponto após.
         sTemp = sTemp & Left(aNomes(i), 1) & ". "
       Else
         sTemp = sTemp & aNomes(i) & Chr(32)
@@ -171,7 +171,7 @@ Public Function CGCouCPF(sText As String) As String
   End Select
 End Function
 
-Public Function ValorData(ByVal pnData As geDataPadrï¿½o, Optional ByVal pFormato As String = "dd/mm/yyyy") As String
+Public Function ValorData(ByVal pnData As geDataPadrao, Optional ByVal pFormato As String = "dd/mm/yyyy") As String
    Dim sData As String
    
    Select Case pnData
@@ -185,23 +185,23 @@ Public Function ValorData(ByVal pnData As geDataPadrï¿½o, Optional ByVal pFormat
          sData = UltimoDiaDoMes(Date)
          
       Case Else
-         'ï¿½ o prï¿½prio conteï¿½do do campo
+         'é o próprio conteúdo do campo
    End Select
    ValorData = sData
 End Function
 
 Public Function UltimoDiaDoMes(ByVal psData As String) As String
-   Dim sMï¿½s As String, sAno As String
-   Dim sMï¿½sAno As String
+   Dim sMes As String, sAno As String
+   Dim sMesAno As String
    
-   sMï¿½s = Format$(psData, "mm")
+   sMes = Format$(psData, "mm")
    sAno = Format$(psData, "yyyy")
   
-   Select Case sMï¿½s
+   Select Case sMes
     Case "01", "03", "05", "07", "08", "10", "12"
          UltimoDiaDoMes = "31"
     Case Else
-       If sMï¿½s <> "02" Then
+       If sMes <> "02" Then
           UltimoDiaDoMes = "30"
        Else
           If sAno Mod 4 = 0 Then
@@ -211,8 +211,8 @@ Public Function UltimoDiaDoMes(ByVal psData As String) As String
           End If
        End If
    End Select
-   sMï¿½sAno = Format$(psData, "mm/yyyy")
-   UltimoDiaDoMes = UltimoDiaDoMes & "/" & sMï¿½sAno
+   sMesAno = Format$(psData, "mm/yyyy")
+   UltimoDiaDoMes = UltimoDiaDoMes & "/" & sMesAno
 End Function
 
 Public Sub HabilitarEdicao(ByRef Campos As Object, _
@@ -450,7 +450,7 @@ Public Function ExtractResData(sID As String, sType As String, PathArqDestino As
   If FileExist(PathArqDestino) Then
     If exitIfExist = True Then Exit Function
     
-    If MsgBox("Arquivo jï¿½ existe!" & vbCrLf & vbCrLf & "Deseja substitui-lï¿½?", _
+    If MsgBox("Arquivo já existe!" & vbCrLf & vbCrLf & "Deseja substitui-ló?", _
               vbQuestion + vbYesNo, App.Title) = vbYes Then
         
       bExist = True
@@ -526,8 +526,8 @@ End Sub
 Public Sub MGShowErro(ByVal pProcedure As String, Optional ByVal Mensagem As String, Optional ByVal Titulo As String)
   If Mensagem = "" Then
     Mensagem = "Procedimento..: " & pProcedure & vbCrLf & _
-               "Nï¿½mero do Erro: " & Err.Source & vbCrLf & _
-               "Descriï¿½ï¿½o.....: " & Err.Description & vbCrLf & vbCrLf & _
+               "Número do Erro: " & Err.Source & vbCrLf & _
+               "Descrição.....: " & Err.Description & vbCrLf & vbCrLf & _
                "Consulte o Administrador de Sistema e o informe sobre o erro!"
   End If
   
@@ -558,7 +558,7 @@ End Sub
 
 Public Function MGShowQuest(ByVal Mensagem As String, _
                             Optional ByVal Titulo As String, _
-                            Optional ByVal psBotoes As String = "&Sim|&Nï¿½o") As String
+                            Optional ByVal psBotoes As String = "&Sim|&Não") As String
   If Titulo = "" Then
     Titulo = App.ProductName
     If Titulo = "" Then Titulo = App.EXEName
@@ -594,7 +594,7 @@ DeNovo:
       GoTo DeNovo                         'encripta novamente
     End If
     s$ = s$ + Chr$(ii)                    'concatena string encriptada
-  Next                                    'prï¿½ximo caracter a encriptar
+  Next                                    'próximo caracter a encriptar
   Cripty$ = s$                             'retorna a nova string
 End Function
 
@@ -635,13 +635,13 @@ Public Function CalculaIdade(ByVal XData) As String
   Dim nAnos As Double, nMes As Double, nDias As Double
     
   If XData = "" Or IsNull(XData) And Not IsDate(XData) Then
-    sIdade = "Nï¿½o Informado!"
+    sIdade = "Não Informado!"
   Else
     On Error GoTo Sair:
     '--------Calculando Anos
     nAnos = Trim(Str(Int((Val(Format(Date, "yyyymmdd")) - Val(Format(XData, "yyyymmdd"))) / 10000)))
     
-    '--------Calculando Mï¿½ses
+    '--------Calculando Meses
     nMes = Int((Val(Format(Date, "mmdd")) - Val(Format(XData, "mmdd"))) / 100)
     If nMes < 0 Then nMes = Trim(Str(nMes + 12))
     
@@ -664,7 +664,7 @@ Public Function CalculaIdade(ByVal XData) As String
     '--------Preenchendo Meses
     If Val(nMes) > 0 Then
       If sIdade <> "" Then sIdade = sIdade & IIf(Val(nDias) > 0, ", ", " e ")
-      sIdade = sIdade & Val(nMes) & IIf(Val(nMes) = 1, " mï¿½s", " meses")
+      sIdade = sIdade & Val(nMes) & IIf(Val(nMes) = 1, " mês", " meses")
     End If
     
     '--------Preenchendo Dias

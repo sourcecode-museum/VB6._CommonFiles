@@ -414,7 +414,7 @@ Public Function ShowInput(ByVal psPrompt As String, _
   If pbInputPassword Then
     With CampoInput
       .PasswordChar = "X"
-      .Font.name = "Wingdings"
+      .Font.Name = "Wingdings"
       .Font.Size = 10
     End With
   End If
@@ -467,14 +467,14 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
   Unload Me
   Exit Function
 TrataErro:
-  ShowMsgBox "Erro na Lista de Operações!", "Erro: ShowInputCombo", "Fechar", , , imCritical
+  ShowMsgBox "Erro na Lista de Opções!", "Erro: ShowInputCombo", "Fechar", , , imCritical
   Unload Me
 End Function
 
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:23 - ShowMsgBox
 ' Author    : Heliomar P. Marques
-' Purpose   : Substituir o msgbox padrao
+' Purpose   : Substitui o msgbox padrao
 '---------------------------------------------------------------------------------------
 Public Function ShowMsgBox(ByVal psPrompt As String, _
                            Optional ByVal psTitulo As String, _
@@ -544,10 +544,6 @@ End Property
 
 Private Sub cboOpcoes_Click()
   CampoInput.Text = cboOpcoes.Text
-End Sub
-
-Private Sub chkOpcao_Click()
-
 End Sub
 
 Private Sub cmdButtons_Click(Index As Integer)
@@ -652,7 +648,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
   Set FormMessage = Nothing
 End Sub
 
-Private Sub lblCaption_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub lblCaption_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
   Call DragForm
 End Sub
 

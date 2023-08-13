@@ -271,11 +271,11 @@ Private Sub Form_Load()
   Label1(4).Caption = "https://navto.me/qualita-apps"
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
   Call DragForm
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
   Label1(0).ForeColor = vbWhite
   Label1(4).ForeColor = vbWhite
 End Sub
@@ -287,7 +287,7 @@ End Sub
 Private Sub Label1_Click(Index As Integer)
     On Local Error Resume Next
     
-    Dim Email As String
+    'Dim email As String
     
     Select Case Index
     Case 0
@@ -306,11 +306,11 @@ Public Sub DragForm()
   Call SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0)
 End Sub
 
-Private Sub Label1_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Label1_MouseDown(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
   If Index = 1 Then Call DragForm
 End Sub
 
-Private Sub Label1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Label1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
   If Index = 0 Or Index = 4 Then Label1(Index).ForeColor = &H25B1DA
 End Sub
 
