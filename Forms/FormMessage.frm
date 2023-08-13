@@ -56,7 +56,7 @@ Begin VB.Form FormMessage
    End
    Begin VB.CheckBox chkOpcao 
       BackColor       =   &H00E9FEFE&
-      Caption         =   "Nï¿½o mostrar esta mensagem novamente"
+      Caption         =   "Não mostrar esta mensagem novamente"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -414,7 +414,7 @@ Public Function ShowInput(ByVal psPrompt As String, _
   If pbInputPassword Then
     With CampoInput
       .PasswordChar = "X"
-      .Font.Name = "Wingdings"
+      .Font.name = "Wingdings"
       .Font.Size = 10
     End With
   End If
@@ -430,7 +430,7 @@ End Function
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:25 - ShowInputCombo
 ' Author    : Heliomar P. Marques
-' Purpose   : Como o InputBox tradicional, abre como modal travando a tela a espera de uma informacao
+' Purpose   : Como o InputBox tradicional, e abre como um modal travando a tela a espera de uma informacao
 '---------------------------------------------------------------------------------------
 Public Function ShowInputCombo(ByVal psPrompt As String, _
                                ByVal psListaArray As String, _
@@ -467,7 +467,7 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
   Unload Me
   Exit Function
 TrataErro:
-  ShowMsgBox "Erro na Lista de Opï¿½ï¿½es!", "Erro: ShowInputCombo", "Fechar", , , imCritical
+  ShowMsgBox "Erro na Lista de Operações!", "Erro: ShowInputCombo", "Fechar", , , imCritical
   Unload Me
 End Function
 
@@ -544,6 +544,10 @@ End Property
 
 Private Sub cboOpcoes_Click()
   CampoInput.Text = cboOpcoes.Text
+End Sub
+
+Private Sub chkOpcao_Click()
+
 End Sub
 
 Private Sub cmdButtons_Click(Index As Integer)
