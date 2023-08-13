@@ -2,12 +2,12 @@
 *.VisualBasic6 linguist-detectable=true
 
 *.txt text eol=auto
-*.bas text eol=crlf
-*.frm text eol=crlf
-*.dsr text eol=crlf
-*.vbp text eol=crlf
-*.cls text eol=crlf
-*.ini text eol=crlf
+*.bas text eol=crlf encoding=cp1252
+*.frm text eol=crlf encoding=cp1252
+*.dsr text eol=crlf encoding=cp1252
+*.vbp text eol=crlf encoding=cp1252
+*.cls text eol=crlf encoding=cp1252
+*.ini text eol=crlf encoding=cp1252
 
 # Denote all files that are truly binary and should not be modified.
 *.frx binary
