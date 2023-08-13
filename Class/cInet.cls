@@ -391,27 +391,22 @@ Private Function UrlEncode(sText As String) As String
 End Function
  
 Public Sub CloseConnection()
-    On Error GoTo ERROR_HANDLER
+  On Error GoTo ERROR_HANDLER
 
-    If m_hInetRequest > 0 Then Call InternetCloseHandle(m_hInetRequest)
-    If m_hInetConnect > 0 Then Call InternetCloseHandle(m_hInetConnect)
-    If m_hInetSession > 0 Then Call InternetCloseHandle(m_hInetSession)
-    m_hInetRequest = 0
-    m_hInetConnect = 0
-    m_hInetSession = 0
-    m_sPOSTData = ""
-    m_sURLDomain = ""
-    m_sURLPort = ""
-    m_sURLPath = ""
-    m_bURLSSL = False
+  If m_hInetRequest > 0 Then Call InternetCloseHandle(m_hInetRequest)
+  If m_hInetConnect > 0 Then Call InternetCloseHandle(m_hInetConnect)
+  If m_hInetSession > 0 Then Call InternetCloseHandle(m_hInetSession)
+  m_hInetRequest = 0
+  m_hInetConnect = 0
+  m_hInetSession = 0
+  m_sPOSTData = ""
+  m_sURLDomain = ""
+  m_sURLPort = ""
+  m_sURLPath = ""
+  m_bURLSSL = False
 ERROR_HANDLER:
 End Sub
  
 Private Sub Class_Terminate()
     Call CloseConnection
 End Sub
-
-
-
-
-

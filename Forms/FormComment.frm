@@ -10,7 +10,7 @@ Begin VB.Form FormComment
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
-      Name            =   "Century Gothic"
+      Name            =   "Microsoft Sans Serif"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -31,7 +31,7 @@ Begin VB.Form FormComment
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Microsoft Sans Serif"
          Size            =   9
          Charset         =   0
          Weight          =   400
@@ -164,7 +164,7 @@ Begin VB.Form FormComment
       BackStyle       =   0  'Transparent
       Caption         =   "Informe aqui, as observações que deseja imprimir no rodapé dos relatórios de compra e venda."
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Microsoft Sans Serif"
          Size            =   9.75
          Charset         =   0
          Weight          =   400

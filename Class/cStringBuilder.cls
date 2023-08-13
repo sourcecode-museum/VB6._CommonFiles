@@ -240,9 +240,3 @@ Private Sub Class_Initialize()
    ' The default allocation: 8192 characters.
    m_iChunkSize = 16384
 End Sub
-
-
-
-
-
-

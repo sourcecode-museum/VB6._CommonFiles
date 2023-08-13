@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Begin VB.Form FormProgress 
    BackColor       =   &H00FCFCFC&
    BorderStyle     =   3  'Fixed Dialog
@@ -28,10 +28,10 @@ Begin VB.Form FormProgress
       BackColor       =   &H00F3F3F3&
       Caption         =   " Barra de Progresso "
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -39,7 +39,7 @@ Begin VB.Form FormProgress
       Height          =   300
       Left            =   0
       TabIndex        =   0
-      Top             =   0
+      Top             =   -30
       Width           =   3540
    End
    Begin MSComctlLib.ProgressBar Progress 
@@ -61,8 +61,8 @@ Begin VB.Form FormProgress
       BackStyle       =   0  'Transparent
       Caption         =   "Progresso"
       BeginProperty Font 
-         Name            =   "Century Gothic"
-         Size            =   9
+         Name            =   "Verdana"
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False

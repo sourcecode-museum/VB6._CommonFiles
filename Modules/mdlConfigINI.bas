@@ -52,7 +52,7 @@ Private Sub CriarArqConfig(ByVal sPathFile As String)
         
         .Gravar "CONEXAO", "UserConnect", "PROVEDOR+SOURCE"
         .Gravar "CONEXAO", "PROVEDOR", "PROVIDER=MSDataShape;Data PROVIDER=Microsoft.Jet.OLEDB.4.0;"
-        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & gtApp.NameOriginal & ".MDB"
+        .Gravar "CONEXAO", "SOURCE", App.Path & "\" & gtApp.NomeApp & ".MDB"
     End With
     
     Set oArqINI = Nothing
@@ -114,7 +114,7 @@ Public Function CarregarInfoConexao() As String
         End If
     
         If Not FileExist(sPathDB) Then
-            Call mdlGeral.ExtractResData("BDados", "Custom", App.Path & "\" & gtApp.NameOriginal & ".MDB", True)
+            Call mdlGeral.ExtractResData("BDados", "Custom", App.Path & "\" & gtApp.NomeApp & ".MDB", True)
             If Not FileExist(sPathDB) Then
               GoTo BrowserPathBD
             End If

@@ -19,6 +19,7 @@ Begin VB.Form FormSplash
    EndProperty
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3510
@@ -70,7 +71,7 @@ Begin VB.Form FormSplash
       BackStyle       =   0  'Transparent
       Caption         =   "App.ProductName"
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Arial"
          Size            =   12
          Charset         =   0
          Weight          =   700
@@ -145,7 +146,7 @@ Begin VB.Form FormSplash
    Begin VB.Label Label1 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
-      BackColor       =   &H00E0E0E0&
+      BackColor       =   &H00F3F3F3&
       BorderStyle     =   1  'Fixed Single
       Caption         =   $"FormSplash.frx":0000
       ForeColor       =   &H80000008&
@@ -162,7 +163,7 @@ Begin VB.Form FormSplash
       BackStyle       =   0  'Transparent
       Caption         =   "By: Heliomar P. Marques"
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Verdana"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -171,12 +172,12 @@ Begin VB.Form FormSplash
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H0025B1DA&
-      Height          =   255
+      Height          =   240
       Index           =   1
       Left            =   105
       TabIndex        =   1
       Top             =   0
-      Width           =   2295
+      Width           =   2400
    End
    Begin VB.Shape Shape1 
       BackColor       =   &H00E0E0E0&
@@ -213,15 +214,25 @@ Begin VB.Form FormSplash
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "gtApp.URL"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   4
-      Left            =   4905
+      Left            =   4800
       TabIndex        =   4
       Top             =   3195
-      Width           =   780
+      Width           =   885
    End
    Begin VB.Shape Shape1 
+      BackColor       =   &H00FFFFFF&
       BackStyle       =   1  'Opaque
       Height          =   2670
       Index           =   4
@@ -257,7 +268,7 @@ Private Sub Form_Load()
   Label1(2).Caption = App.ProductName
   Label1(6).Caption = App.Comments
   Label1(3).Caption = "Versão: " & App.Major & "." & Format(App.Minor, "00") & "." & Format(App.Revision, "000")
-  Label1(4).Caption = gtApp.URL
+  Label1(4).Caption = "https://navto.me/qualita-apps"
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
