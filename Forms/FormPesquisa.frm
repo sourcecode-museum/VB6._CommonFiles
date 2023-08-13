@@ -5,13 +5,13 @@ Object = "{AB4C3C68-3091-48D0-BB3D-8F92CD2CB684}#1.0#0"; "AButtons.ocx"
 Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDatGrd.ocx"
 Begin VB.Form FormPesquisa 
    BackColor       =   &H80000009&
-   Caption         =   "Pesquisa Rápida..."
+   Caption         =   "Pesquisa Rï¿½pida..."
    ClientHeight    =   4950
    ClientLeft      =   1965
    ClientTop       =   2685
    ClientWidth     =   7965
    BeginProperty Font 
-      Name            =   "Tahoma"
+      Name            =   "Verdana"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -22,6 +22,7 @@ Begin VB.Form FormPesquisa
    Icon            =   "FormPesquisa.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    Picture         =   "FormPesquisa.frx":058A
    ScaleHeight     =   4950
    ScaleWidth      =   7965
@@ -43,8 +44,8 @@ Begin VB.Form FormPesquisa
       Caption         =   "Clique duas vezes ou tecle [ENTER] para selecionar o registro"
       ForeColor       =   4210752
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Century Gothic"
-         Size            =   9
+         Name            =   "Verdana"
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -68,7 +69,7 @@ Begin VB.Form FormPesquisa
       RowHeight       =   15
       RowDividerStyle =   3
       BeginProperty HeadFont {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -77,7 +78,7 @@ Begin VB.Form FormPesquisa
          Strikethrough   =   0   'False
       EndProperty
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -229,7 +230,7 @@ Begin VB.Form FormPesquisa
          TX              =   "&Pesquisar"
          ENAB            =   -1  'True
          BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
+            Name            =   "Arial"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -252,7 +253,7 @@ Begin VB.Form FormPesquisa
          _ExtentX        =   2831
          _ExtentY        =   556
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -262,6 +263,7 @@ Begin VB.Form FormPesquisa
          EndProperty
          TextCase        =   1
          RawText         =   0
+         FontName        =   "Verdana"
          FontSize        =   8,25
       End
       Begin VB.ComboBox cmbCampos 
@@ -283,7 +285,7 @@ Begin VB.Form FormPesquisa
          _ExtentY        =   556
          Enabled         =   0   'False
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -296,6 +298,7 @@ Begin VB.Form FormPesquisa
          TextCase        =   1
          RawText         =   9
          Mask            =   "##/##/####"
+         FontName        =   "Verdana"
          FontSize        =   8,25
       End
       Begin VB.Image imgOrderBy 
@@ -308,15 +311,15 @@ Begin VB.Form FormPesquisa
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "&até"
+         Caption         =   "&atï¿½"
          Enabled         =   0   'False
          ForeColor       =   &H00000000&
          Height          =   195
          Index           =   2
-         Left            =   4425
+         Left            =   4395
          TabIndex        =   4
          Top             =   585
-         Width           =   225
+         Width           =   270
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -327,8 +330,8 @@ Begin VB.Form FormPesquisa
          Index           =   1
          Left            =   2685
          TabIndex        =   1
-         Top             =   345
-         Width           =   1275
+         Top             =   300
+         Width           =   1530
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -339,8 +342,8 @@ Begin VB.Form FormPesquisa
          Index           =   0
          Left            =   345
          TabIndex        =   0
-         Top             =   345
-         Width           =   1005
+         Top             =   300
+         Width           =   1245
       End
    End
    Begin VB.Menu menuPop 
@@ -365,12 +368,12 @@ Option Explicit
 '########################################################################################
 '# Exemplo de psCapFieldMask =
 '#  "Caption       ,Field    ,Maskara    |Caption     ,Field    ,Maskara  "
-'#  "Data do Pedido,DATA_PEDI,Ðdd/mm/yyyy|Nº do Pedido,NUME_PEDI,999999;0;"
+'#  "Data do Pedido,DATA_PEDI,ï¿½dd/mm/yyyy|Nï¿½ do Pedido,NUME_PEDI,999999;0;"
 '#  {OBS: as mascaras:
-'#   'Ðdd/mm/yyyy' = inicial com Ð significa que a pesquisa utilizara os campos de data
-'#   'ñP'          = significa que o campo não deve entrar no combo de pesquisa
+'#   'ï¿½dd/mm/yyyy' = inicial com ï¿½ significa que a pesquisa utilizara os campos de data
+'#   'ï¿½P'          = significa que o campo nï¿½o deve entrar no combo de pesquisa
 '#
-'#  Alt 164 = ñ  /  Alt 209 = Ð
+'#  Alt 164 = ï¿½  /  Alt 209 = ï¿½
 '########################################################################################
 
 Private Const cTXTWidth As Single = 3705
@@ -403,10 +406,10 @@ Private Sub MontarTela(ByVal psAliasFieldMask As String, ByVal pAddCombo As Bool
     sField = Trim$(aL(1))
     sMask = LTrim$(aL(2))
  
-    'Definição de Campos de Pesquisa e Ordem
+    'Definiï¿½ï¿½o de Campos de Pesquisa e Ordem
     'Preenchimento do array de mascara
-    If Mid$(sMask, 1, 2) <> "ñP" And pAddCombo Then
-      'Se <> então adicionando na Combo os Campos
+    If Mid$(sMask, 1, 2) <> "ï¿½P" And pAddCombo Then
+      'Se <> entï¿½o adicionando na Combo os Campos
       With cmbCampos
         .AddItem sCapt
         ReDim Preserve maFields(.ListCount)
@@ -438,7 +441,7 @@ Private Sub MontarTela(ByVal psAliasFieldMask As String, ByVal pAddCombo As Bool
             If sngW2 > sngW1 Then sngW1 = sngW2
             DataGrid1.Columns(i).Width = sngW1
         
-        ElseIf Mid(UCase(sMask), 1, 1) = "Ð" Then
+        ElseIf Mid(UCase(sMask), 1, 1) = "ï¿½" Then
             DataGrid1.Columns(i).Alignment = dbgCenter
             
             sngW1 = TextWidth(DataGrid1.Columns(i).Caption)
@@ -497,18 +500,18 @@ End Function
 Private Sub cmbCampos_Click()
   Dim sMask As String
   
-  'Se a Mascara for Ðdd/mm/yyyy entao
+  'Se a Mascara for ï¿½dd/mm/yyyy entao
   'desabilita o Mask e habilita os Campos data
   If cmbCampos.ListIndex <> -1 Then
     sMask = maMasks(cmbCampos.ListIndex + 1)
     
         
-    If Mid(sMask, 1, 1) = "Ð" Then
+    If Mid(sMask, 1, 1) = "ï¿½" Then
       txtCampo(0).TextMask = [Custom Mask]
       txtCampo(0).Width = 1600
       txtCampo(1).Enabled = True
     
-      sMask = Mid(sMask, 2, Len(sMask)) 'Retirando o Ð
+      sMask = Mid(sMask, 2, Len(sMask)) 'Retirando o ï¿½
                 sMask = Replace(LCase(sMask), "d", "#")
                 sMask = Replace(LCase(sMask), "m", "#")
                 sMask = Replace(LCase(sMask), "y", "#")
@@ -557,11 +560,11 @@ Private Sub Pesquisar(ByVal psCampo As String, _
   Dim sSQL As String
 
   If psCampo = "" Then
-    MGShowInfo "É necessário informar o campo de pesquisa."
+    MGShowInfo "ï¿½ necessï¿½rio informar o campo de pesquisa."
     Exit Sub
   End If
 
-  'Se tiver pesquisa que envolva datas, não aceita que a duas fiquem vazias
+  'Se tiver pesquisa que envolva datas, nï¿½o aceita que a duas fiquem vazias
   If pbData Then
     If psValor1 = "" And psValor2 = "" Then
       MGShowInfo "Informe pelo menos uma das datas."
@@ -582,7 +585,7 @@ Private Sub Pesquisar(ByVal psCampo As String, _
 
     If Not pbData Then
       If psValor1 <> "" Then
-        If Mid$(psMask, 1, 1) = "#" Then 'Só aceita numeros
+        If Mid$(psMask, 1, 1) = "#" Then 'Sï¿½ aceita numeros
           sSQL = sSQL & psCampo & " = " & psValor1
         Else
           sSQL = sSQL & psCampo & " LIKE '" & psValor1 & "%'"
@@ -676,7 +679,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub Form_Resize()
-  TimerResize.Enabled = True  'isto é feito para evitar atrazos no resize do form
+  TimerResize.Enabled = True  'isto ï¿½ feito para evitar atrazos no resize do form
 End Sub
 
 Private Sub imgOrderBy_Click()
@@ -719,7 +722,7 @@ Private Sub btnPesquisar_Click()
   Dim sValor1 As String, sValor2 As String, sMask As String
   Dim bPesqData As Boolean
 
-  If Not txtCampo(1).Enabled Then  'Não esta utilizando os 2 Campos
+  If Not txtCampo(1).Enabled Then  'Nï¿½o esta utilizando os 2 Campos
     sValor1 = txtCampo(0).Text
     sValor2 = ""
     sMask = txtCampo(0).Mask
@@ -727,7 +730,7 @@ Private Sub btnPesquisar_Click()
     
   Else 'visualiza os dois campos
     sMask = maMasks(cmbCampos.ListIndex + 1)
-    sMask = Mid$(sMask, 2, Len(sMask) - 1) 'Retira o Caracter Ð da mascara de data
+    sMask = Mid$(sMask, 2, Len(sMask) - 1) 'Retira o Caracter ï¿½ da mascara de data
     
     Select Case sMask
       Case Is = "##/##/####"

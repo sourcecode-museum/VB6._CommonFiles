@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Object = "{AB4C3C68-3091-48D0-BB3D-8F92CD2CB684}#1.0#0"; "AButtons.ocx"
 Begin VB.Form FormMessage 
    BackColor       =   &H00E9FEFE&
@@ -41,7 +41,7 @@ Begin VB.Form FormMessage
       TX              =   ""
       ENAB            =   -1  'True
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -56,18 +56,27 @@ Begin VB.Form FormMessage
    End
    Begin VB.CheckBox chkOpcao 
       BackColor       =   &H00E9FEFE&
-      Caption         =   "Não mostrar esta mensagem novamente"
+      Caption         =   "Nï¿½o mostrar esta mensagem novamente"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   210
       Left            =   60
       TabIndex        =   4
       Top             =   2385
       Visible         =   0   'False
-      Width           =   3225
+      Width           =   4110
    End
    Begin VB.Frame fraRodape 
       BackColor       =   &H00FCFCFC&
       BeginProperty Font 
-         Name            =   "Small Fonts"
+         Name            =   "Verdana"
          Size            =   2.25
          Charset         =   0
          Weight          =   400
@@ -106,7 +115,7 @@ Begin VB.Form FormMessage
    End
    Begin VB.ComboBox cboOpcoes 
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -114,7 +123,7 @@ Begin VB.Form FormMessage
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   360
+      Height          =   315
       Left            =   690
       Style           =   2  'Dropdown List
       TabIndex        =   0
@@ -206,7 +215,7 @@ Begin VB.Form FormMessage
    End
    Begin VB.TextBox txtTexto 
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -225,7 +234,7 @@ Begin VB.Form FormMessage
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "Century Gothic"
+         Name            =   "Verdana"
          Size            =   9
          Charset         =   0
          Weight          =   400
@@ -339,7 +348,7 @@ Private Const SWP_NOSIZE = &H1
 Private Const SWP_NOMOVE = &H2
 Private Const SWP_NOACTIVATE = &H10
 Private Const SWP_SHOWWINDOW = &H40
-Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
+Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
 '=================================
 'NA FRENTE
 '   SetWindowPos Me.hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
@@ -383,12 +392,12 @@ Public Enum enuResultInput
 End Enum
 Private meResultInput As enuResultInput
 
-Private mbShowInput As Boolean  'Se caixa de mensagem é um inputbox
+Private mbShowInput As Boolean  'Se caixa de mensagem for um inputbox
 
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:24 - ShowInput
 ' Author    : Heliomar P. Marques
-' Purpose   : Como o InputBox tradicional, abre como modal esperando uma ação do usuario
+' Purpose   : Como o InputBox tradicional, abre como modal esperando uma informacao do usuario
 '---------------------------------------------------------------------------------------
 Public Function ShowInput(ByVal psPrompt As String, _
                           Optional ByVal psTitulo As String, _
@@ -421,7 +430,7 @@ End Function
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:25 - ShowInputCombo
 ' Author    : Heliomar P. Marques
-' Purpose   : Como o InputBox tradicional, abre como modal travando a tela a espera de uma ação
+' Purpose   : Como o InputBox tradicional, abre como modal travando a tela a espera de uma informacao
 '---------------------------------------------------------------------------------------
 Public Function ShowInputCombo(ByVal psPrompt As String, _
                                ByVal psListaArray As String, _
@@ -458,14 +467,14 @@ Public Function ShowInputCombo(ByVal psPrompt As String, _
   Unload Me
   Exit Function
 TrataErro:
-  ShowMsgBox "Erro na Lista de Opções!", "Erro: ShowInputCombo", "Fechar", , , imCritical
+  ShowMsgBox "Erro na Lista de Opï¿½ï¿½es!", "Erro: ShowInputCombo", "Fechar", , , imCritical
   Unload Me
 End Function
 
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:23 - ShowMsgBox
 ' Author    : Heliomar P. Marques
-' Purpose   : Funciona como o MsgBox tradicional travando a tela até que se execute alguma ação
+' Purpose   : Substituir o msgbox padrao
 '---------------------------------------------------------------------------------------
 Public Function ShowMsgBox(ByVal psPrompt As String, _
                            Optional ByVal psTitulo As String, _
@@ -491,7 +500,7 @@ End Function
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:22 - ShowInfo
 ' Author    : Heliomar P. Marques
-' Purpose   : Serve para mensagem apenas informativas não travando do aplicativo de chamada
+' Purpose   : Mensagens informativas nao Modal
 '---------------------------------------------------------------------------------------
 Public Sub ShowInfo(ByVal psPrompt As String, _
                     Optional ByVal psTitulo As String, _
