@@ -348,7 +348,7 @@ Private Const SWP_NOSIZE = &H1
 Private Const SWP_NOMOVE = &H2
 Private Const SWP_NOACTIVATE = &H10
 Private Const SWP_SHOWWINDOW = &H40
-Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
+Private Declare Sub SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long)
 '=================================
 'NA FRENTE
 '   SetWindowPos Me.hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOACTIVATE Or SWP_SHOWWINDOW Or SWP_NOMOVE Or SWP_NOSIZE
@@ -500,7 +500,7 @@ End Function
 '---------------------------------------------------------------------------------------
 ' Procedure : 28/08/2006 11:22 - ShowInfo
 ' Author    : Heliomar P. Marques
-' Purpose   : Mensagens informativas nao Modal
+' Purpose   : Serve para mensagem apenas informativas não travando do aplicativo de chamada
 '---------------------------------------------------------------------------------------
 Public Sub ShowInfo(ByVal psPrompt As String, _
                     Optional ByVal psTitulo As String, _
@@ -563,7 +563,6 @@ Private Sub CriarBotoes(ByVal psCapButtonsArray As String)
   Dim aCap() As String
   Dim i As Integer
   Dim nLeftPadrao As Integer
-  Dim nWidth As Long
   Dim nCount As Integer
 
   nLeftPadrao = cmdButtons(0).Left
